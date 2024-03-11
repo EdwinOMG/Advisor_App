@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+
+<ScrollPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller = "com.example.databasehelp.AdvisorSheetController">
+   <content>
+      <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0">
+         <children>
+            <ImageView fx:id="imageView1" fitHeight="134.0" fitWidth="1681.0" layoutX="241.0" layoutY="-2.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../resources/Images/Screenshot%202024-02-20%20at%204.15.23%20PM.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="imageView2" fitHeight="352.0" fitWidth="185.0" layoutX="7.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../Desktop/Screenshot%202024-02-20%20at%204.15.31%20PM.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="imageView3" fitHeight="149.0" fitWidth="1701.0" layoutX="222.0" layoutY="89.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../Desktop/Screenshot%202024-02-20%20at%204.25.56%20PM.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="imageView3" fitHeight="52.0" fitWidth="1699.0" layoutX="230.0" layoutY="166.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../Desktop/Screenshot%202024-02-20%20at%204.41.39%20PM.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="imageView4" fitHeight="51.0" fitWidth="1697.0" layoutX="230.0" layoutY="259.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../Desktop/Screenshot%202024-02-20%20at%204.41.31%20PM.png" />
+               </image>
+            </ImageView>
+            <Accordion layoutX="185.0" layoutY="355.0" />
+            <ImageView fx:id="imageView5" fitHeight="60.0" fitWidth="1698.0" layoutX="230.0" layoutY="440.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../Desktop/Screenshot%202024-02-20%20at%204.41.46%20PM.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="imageView6" fitHeight="79.0" fitWidth="1697.0" layoutX="230.0" layoutY="630.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../Desktop/Screenshot%202024-02-20%20at%205.12.37%20PM.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="imageView7" fitHeight="61.0" fitWidth="1696.0" layoutX="230.0" layoutY="840.0" pickOnBounds="true" preserveRatio="true">
+                <image>
+                   <Image url="@../Desktop/Screenshot%202024-02-20%20at%204.42.13%20PM.png" />
+                </image>
+            </ImageView>
+            <TableView fx:id="first_table" editable="true" layoutX="230.0" layoutY="278.0" prefHeight="163.0" prefWidth="1693.0">
+                <columns>
+                    <TableColumn fx:id="courseCompletion" text="Completed"/>
+                    <TableColumn fx:id="course_id" text="Course ID"/>
+                    <TableColumn fx:id="course_name" text="Course Name"/>
+                    <TableColumn fx:id="course_credits" text="Course Credits"/>
+                    <TableColumn fx:id="course_term" text="Course Term"/>
+                    <TableColumn fx:id="course_grade" text="Course Grade"/>
+                    <TableColumn fx:id="course_notes" text="Course Notes"/>
+
+                    <TableColumn prefWidth="75.0" />
+                    <TableColumn prefWidth="75.0" />
+                </columns>
+            </TableView>
+
+            <TableView fx:id="second_table" editable="true" layoutX="234.0" layoutY="459.0" prefHeight="174.0" prefWidth="1688.0">
+                <columns>
+                    <TableColumn fx:id="course_completion_2" text="Completed"/>
+                    <TableColumn fx:id="course_id_2" text="Course ID"/>
+                    <TableColumn fx:id="course_name_2" text="Course Name"/>
+                    <TableColumn fx:id="course_credits_2" text="Course Credits"/>
+                    <TableColumn fx:id="course_term_2" text="Course Term"/>
+                    <TableColumn fx:id="course_grade_2" text="Course Grade"/>
+                    <TableColumn fx:id="course_notes_2" text="Course Notes"/>
+                    <TableColumn prefWidth="75.0" />
+                    <TableColumn prefWidth="75.0" />
+                </columns>
+            </TableView>
+
+            <TableView fx:id="third_table" editable="true" layoutX="230.0" layoutY="646.0" prefHeight="195.0" prefWidth="1691.0">
+                <columns>
+                    <TableColumn fx:id="course_completion_3" text="Completed"/>
+                    <TableColumn fx:id="course_id_3" text="Course ID"/>
+                    <TableColumn fx:id="course_name_3" text="Course Name"/>
+                    <TableColumn fx:id="course_credits_3" text="Course Credits"/>
+                    <TableColumn fx:id="course_term_3" text="Course Term"/>
+                    <TableColumn fx:id="course_grade_3" text="Course Grade"/>
+                    <TableColumn fx:id="course_notes_3" text="Course Notes"/>
+                    <TableColumn prefWidth="75.0" />
+                    <TableColumn prefWidth="75.0" />
+                </columns>
+            </TableView>
+
+            <TableView fx:id="fourth_table" editable="true" layoutX="230.0" layoutY="858.0" prefHeight="222.0" prefWidth="1690.0">
+                <columns>
+                    <TableColumn fx:id="course_completion_4" text="Completed"/>
+                    <TableColumn fx:id="course_id_4" text="Course ID"/>
+                    <TableColumn fx:id="course_name_4" text="Course Name"/>
+                    <TableColumn fx:id="course_credits_4" text="Course Credits"/>
+                    <TableColumn fx:id="course_term_4" text="Course Term"/>
+                    <TableColumn fx:id="course_grade_4" text="Course Grade"/>
+                    <TableColumn fx:id="course_notes_4" text="Course Notes"/>
+                    <TableColumn prefWidth="75.0" />
+                    <TableColumn prefWidth="75.0" />
+                </columns>
+            </TableView>
+
+            <TableView fx:id="pre_table" editable="true" layoutX="230.0" layoutY="186.0" prefHeight="71.0" prefWidth="1703.0">
+                <columns>
+                    <TableColumn fx:id="course_completion_5" text="Completed"/>
+                    <TableColumn fx:id="course_id_5" text="Course ID"/>
+                    <TableColumn fx:id="course_name_5" text="Course Name"/>
+                    <TableColumn fx:id="course_credits_5" text="Course Credits"/>
+                    <TableColumn fx:id="course_term_5" text="Course Term"/>
+                    <TableColumn fx:id="course_grade_5" text="Course Grade"/>
+                    <TableColumn fx:id="course_notes_5" text="Course Notes"/>
+                    <TableColumn prefWidth="75.0" />
+                    <TableColumn prefWidth="75.0" />
+                </columns>
+            </TableView>
+
+         <Button text="Save" onAction="#handleSaveButton" layoutX="50.0" layoutY="500.0" />
+
+         </children>
+      </Pane>
+   </content>
+</ScrollPane>
