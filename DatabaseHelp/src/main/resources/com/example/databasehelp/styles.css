@@ -1,0 +1,34 @@
+.table-row-cell {
+    -fx-pref-height: 18px;
+}
+
+.column-header-background {
+    visibility: hidden;
+    -fx-padding: -1em;
+}
+
+.table-cell {
+    -fx-font-size: 10px;
+}
+
+.table-view .scroll-bar:horizontal {
+    -fx-opacity: 0;
+    -fx-min-height: 0;
+    -fx-pref-height: 0;
+    -fx-max-height: 0;
+    -fx-background-color: transparent; /* Optional: Set the background color to transparent */
+}
+#second_table .table-row-cell {
+    -fx-pref-height: 19px;
+}
+#third_table .table-row-cell {
+    -fx-pref-height: 16px;
+}
+
+#third_table table-cell {
+    -fx-font-size: 10px;
+}
+
+#fourth_table .table-row-cell {
+    -fx-pref-height: 16px;
+}
