@@ -57,12 +57,12 @@
             <Font size="71.0" />
          </font>
       </Label>
-      <Label fx:id="warningSelectLabel" layoutX="1253.0" layoutY="738.0" prefHeight="70.0" prefWidth="341.0" />
+      <Label fx:id="warningSelectLabel" layoutX="410.0" layoutY="200.0" prefHeight="20.0" prefWidth="341.0" />
       <Label layoutX="-48.0" layoutY="11.0" prefHeight="173.0" prefWidth="418.0" scaleX="0.3" scaleY="0.3" text="Add a Student">
          <font>
             <Font size="69.0" />
          </font>
       </Label>
-      <Label fx:id="warningAddText" layoutX="301.0" layoutY="841.0" prefHeight="75.0" prefWidth="378.0" />
+      <Label fx:id="warningAddLabel" layoutX="100.0" layoutY="245.0" prefHeight="20.0" prefWidth="378.0" />
    </children>
 </Pane>

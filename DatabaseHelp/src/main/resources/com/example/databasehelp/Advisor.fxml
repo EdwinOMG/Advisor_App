@@ -9,7 +9,7 @@
 <?import javafx.scene.control.TableRow?>
 
 
-<ScrollPane stylesheets="@styles.css" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="850.0" prefWidth="718.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller = "com.example.databasehelp.AdvisorSheetController" hbarPolicy="NEVER" vbarPolicy="NEVER">
+<ScrollPane fx:id="scrollPane" stylesheets="@styles.css" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="850.0" prefWidth="718.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller = "com.example.databasehelp.AdvisorSheetController" hbarPolicy="NEVER" vbarPolicy="NEVER">
    <content>
       <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1479.0" prefWidth="726.0">
          <children>
@@ -21,13 +21,13 @@
             <Accordion layoutX="185.0" layoutY="355.0" />
             <TableView fx:id="first_table" editable="true" layoutX="-8.0" layoutY="223.0" prefHeight="90.0" prefWidth="725.0" >
               <columns>
-                 <TableColumn fx:id="courseCompletion" text="Completed" prefWidth="50.0"/>
-                 <TableColumn fx:id="course_id" text="Course ID" prefWidth="85.0"/>
-                 <TableColumn fx:id="course_name" text="Course Name" prefWidth="290.0"/>
-                 <TableColumn fx:id="course_credits" text="Course Credits" prefWidth="30.0"/>
-                 <TableColumn fx:id="course_term" text="Course Term" prefWidth="30.0"/>
-                 <TableColumn fx:id="course_grade" text="Course Grade" prefWidth="28.0"/>
-                 <TableColumn fx:id="course_notes" text="Course Notes" prefWidth="220.0"/>
+                 <TableColumn fx:id="course_completion_1" text="Completed" prefWidth="50.0"/>
+                 <TableColumn fx:id="course_id_1" text="Course ID" prefWidth="85.0"/>
+                 <TableColumn fx:id="course_name_1" text="Course Name" prefWidth="290.0"/>
+                 <TableColumn fx:id="course_credits_1" text="Course Credits" prefWidth="30.0"/>
+                 <TableColumn fx:id="course_term_1" text="Course Term" prefWidth="30.0"/>
+                 <TableColumn fx:id="course_grade_1" text="Course Grade" prefWidth="28.0"/>
+                 <TableColumn fx:id="course_notes_1" text="Course Notes" prefWidth="220.0"/>
 
 
 
@@ -88,6 +88,12 @@
 
             <Button text="Save" onAction="#handleSaveButton" layoutX="400.0" layoutY="900.0" />
 
+
+            <Label fx:id="nameLabel" layoutX="170.0" layoutY="37.0" prefHeight="19.0" prefWidth="200.0" text="Name" />
+            <Label fx:id="addressLabel" layoutX="170.0" layoutY="59.0" prefHeight="19.0" prefWidth="250.0" text="Address" />
+            <Label fx:id="idLabel" layoutX="510.0" layoutY="37.0" prefHeight="19.0" prefWidth="200.0" text="Student Id" />
+            <Label fx:id="numberLabel" layoutX="518.0" layoutY="77.0" prefHeight="19.0" prefWidth="200.0" text="number" />
+            <Label fx:id="emailLabel" layoutX="166.0" layoutY="101.0" prefHeight="19.0" prefWidth="250.0" text="Email" />
          </children>
       </Pane>
    </content>

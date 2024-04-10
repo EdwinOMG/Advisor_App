@@ -20,7 +20,7 @@ public class MainApplication extends Application {    private ChoiceBox<String> 
 
         stage.setScene(scene);
         stage.show();
-    }
+    }   
 
     public static void main(String[] args) {
         launch();

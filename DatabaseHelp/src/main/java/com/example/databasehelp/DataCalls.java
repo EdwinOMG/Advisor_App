@@ -59,7 +59,7 @@ public class DataCalls {
                     String courseGrade = resultSet.getString("course_grade");
                     String courseTerm = resultSet.getString("course_term");
                     String courseNotes = resultSet.getString("course_notes");
-                    boolean courseCompletion = resultSet.getBoolean("course_completion");
+                    int courseCompletion = resultSet.getInt("course_completion");
 
 
                     // Create Course and StudentCourseDetails objects
@@ -169,14 +169,9 @@ public class DataCalls {
                     String courseTerm = resultSet.getString("course_term");
                     String courseNotes = resultSet.getString("course_notes");
                     int courseCompletion = resultSet.getInt("course_completion");
-                    if (courseCompletion == 1){
-                        booleanCompletion = true;
-                    }
-                    else {
-                        booleanCompletion = false;
-                    }
+
                     // Create and return a StudentCourseDetails object
-                    return new StudentCourseDetails(studentId, courseGrade, courseTerm, courseNotes, booleanCompletion, courseId);
+                    return new StudentCourseDetails(studentId, courseGrade, courseTerm, courseNotes, courseCompletion, courseId);
                 }
             }
         } catch (SQLException e) {
@@ -186,26 +181,17 @@ public class DataCalls {
         return null; // Return null if no matching record is found
     }
     public static void updateStudentCourseDetails(int studentId, String courseId, StudentCourseDetails studentCourseDetails) throws SQLException {
-        int booleanNumberValue;
         try (Connection connection = DriverManager.getConnection(URL, Username, Password)) {
             String updateQuery = "UPDATE StudentCourseDetails " +
                     "SET course_Notes = ?, course_Term = ?, course_Grade = ?, Course_Completion = ? " +
                     "WHERE Student_ID = ? AND Course_ID = ?";
 
-            if (studentCourseDetails.isCourseCompletion()) {
-                booleanNumberValue = 1;
-                System.out.println("got to true iscoursecompletion in update call");
 
-            } else {
-                booleanNumberValue = 0;
-                System.out.println("got to false iscoursecompletion in update call");
-
-            }
             try (PreparedStatement preparedStatement = connection.prepareStatement(updateQuery)) {
                 preparedStatement.setString(1, studentCourseDetails.getCourseNotes());
                 preparedStatement.setString(2, studentCourseDetails.getCourseTerm());
                 preparedStatement.setString(3, studentCourseDetails.getCourseGrade());
-                preparedStatement.setInt(4, booleanNumberValue);
+                preparedStatement.setInt(4, studentCourseDetails.getCourseCompletion());
                 preparedStatement.setInt(5, studentId);
                 preparedStatement.setString(6, courseId);
 
@@ -236,7 +222,7 @@ public class DataCalls {
         }
         return false;
     }
-
+// Inserts student course details that have info in them into the database.
     public static void insertStudentCourseDetails(int studentId, String courseId, StudentCourseDetails studentCourseDetails) throws SQLException {
 
 
@@ -244,10 +230,9 @@ public class DataCalls {
              PreparedStatement statement = connection.prepareStatement(
                      "INSERT INTO StudentCourseDetails(Student_ID, Course_ID, Course_Notes, Course_Term, Course_Grade, Course_Completion) VALUES (?, ?, ?, ?, ?, ?)")) {
             System.out.println("INSERTSTUDENTCOURSEDETAILS GOT HERE");
-            if (studentCourseDetails.isCourseCompletion()) {
                 System.out.println("got to true iscoursecompletion in update call");
 
-
+            if (studentCourseDetails.getCourseCompletion() == 1) {
                 try (PreparedStatement preparedStatement = statement) {
                     preparedStatement.setInt(1, studentId);
                     preparedStatement.setString(2, courseId);
@@ -258,12 +243,10 @@ public class DataCalls {
 
 
                     preparedStatement.executeUpdate();
+
                 } catch (SQLException e) {
                     throw new RuntimeException(e);
                 }
-            } else {
-                System.out.println("got to false iscoursecompletion in update call");
-
             }
         }
     }
@@ -298,4 +281,28 @@ public class DataCalls {
         return courseList;
     }
 
-}
+    public static String checkRequirement(String courseID) {
+        String query = "SELECT Required_Course_ID " +
+                "FROM CourseRequirement " +
+                "WHERE Course_ID = ?";
+
+        try (Connection connection = getConnection(URL, Username, Password);
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+
+            preparedStatement.setString(1, courseID);
+
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    String requiredID = resultSet.getString("Required_Course_ID");
+                    return requiredID;
+                }
+
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+       return "";
+    }
+
+    }

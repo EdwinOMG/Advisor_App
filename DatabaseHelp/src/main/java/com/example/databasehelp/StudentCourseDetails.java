@@ -4,11 +4,11 @@ public class StudentCourseDetails {
     private String courseGrade;
     private String courseTerm;
     private String courseNotes;
-    private boolean courseCompletion;
+    private int courseCompletion;
     private String courseID;
     private int studentId;
 
-    public StudentCourseDetails(int studentId, String courseGrade, String courseTerm, String courseNotes, boolean courseCompletion, String courseID) {
+    public StudentCourseDetails(int studentId, String courseGrade, String courseTerm, String courseNotes, int courseCompletion, String courseID) {
         this.studentId = studentId;
         this.courseGrade = courseGrade;
         this.courseTerm = courseTerm;
@@ -37,11 +37,11 @@ public class StudentCourseDetails {
         this.courseNotes = courseNotes;
 
     }
-    public boolean isCourseCompletion() {
+    public int getCourseCompletion() {
         return courseCompletion;
     }
 
-    public void setCourseCompletion(boolean courseCompletion) {
+    public void setCourseCompletion(int courseCompletion) {
         this.courseCompletion = courseCompletion;
     }
 

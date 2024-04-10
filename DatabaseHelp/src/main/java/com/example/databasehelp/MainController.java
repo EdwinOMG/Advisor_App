@@ -10,6 +10,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
@@ -17,7 +18,7 @@ import java.io.IOException;
 import java.sql.*;
 
 import static com.example.databasehelp.DataCalls.*;
-
+//
 public class MainController {
     @FXML
     private ChoiceBox<String> major_box;
@@ -42,6 +43,10 @@ public class MainController {
     private Button searchButton;
     @FXML
     private TextField selectStudentID;
+    @FXML
+    private Label warningSelectLabel;
+    @FXML
+    private Label warningAddLabel;
     private int majorNumber;
 
     private int idNum;
@@ -58,10 +63,18 @@ public class MainController {
     @FXML
     private void handleAddButton(ActionEvent event) {
         String studentId = text_id.getText();
+        warningAddLabel.setText("");
+        text_id.getStyleClass().remove("red-text-field");
+        text_email.getStyleClass().remove("red-text-field");
+        text_number.getStyleClass().remove("red-text-field");
+        major_box.getStyleClass().remove("red-text-field");
+
         try {
             idNum = Integer.parseInt(studentId);
         } catch (NumberFormatException e) {
             System.err.println("Invalid Student ID: " + studentId);
+            warningAddLabel.setText("Invalid Student ID");
+            text_id.setStyle("-fx-text-box-border: red; -fx-focus-color: red;");
             return;
         }//converting here cause textfield has to be string
 
@@ -75,8 +88,29 @@ public class MainController {
         if ("Computer Programming".equals(selectedMajor)){
             majorNumber = 1;
         }
-        ObservableList<Course> semester1Courses = DataCalls.selectCoursesBySemester(idNum, 1);
+        else {
+            warningAddLabel.setText("No major selected");
+            major_box.setStyle("-fx-text-box-border: red; -fx-focus-color: red;");
+            return;
+        }
+// Checks if valid email address
+        if (studentEmail.indexOf('@') == -1){
+            warningAddLabel.setText("Not a valid email address");
+            text_email.setStyle("-fx-text-box-border: red; -fx-focus-color: red;");
 
+            return;
+        }
+        // Checking valid phone number
+        if (validatePhoneNumber(studentNumber) == false){
+            warningAddLabel.setText("Number must be XXX-XXX-XXXX");
+            System.out.println("In validatephonenumber if statemnt");
+            text_number.setStyle("-fx-text-box-border: red; -fx-focus-color: red;");
+            return;
+        }
+        //Checking if fields are empty
+        if (studentId.isEmpty() || studentEmail.isEmpty() || studentAddress.isEmpty() || studentNumber.isEmpty() || studentName.isEmpty()){
+            warningAddLabel.setText("All info must be filled out.");
+        }
         // Print or use the retrieved values as needed
         System.out.println("Student ID: " + idNum);
         System.out.println("Student Name: " + studentName);
@@ -103,7 +137,7 @@ public class MainController {
 
         private void openAdvisorsheetGUI(int idNum) {
             try {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/databasehelp/AdvisorSheetNew.fxml"));
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/databasehelp/Advisor.fxml"));
                 Parent root = loader.load();
 
                 AdvisorSheetController advisorSheetController = loader.getController();
@@ -115,7 +149,7 @@ public class MainController {
 
                 stage.setScene(scene);
                 stage.show();
-            } catch (IOException e) {
+            } catch (IOException | SQLException e) {
                 e.printStackTrace();
             }
         }
@@ -123,30 +157,43 @@ public class MainController {
     private void handleSearchButton(ActionEvent event) {
         System.out.println("Got into search button");
         String searchID = selectStudentID.getText();
-        int idNum = Integer.parseInt(searchID);
-
-        boolean exist = doesStudentExist(idNum);
-
-        if (exist) {
-
-
-            ObservableList<Course> courseIdList = DataCalls.selectCoursesByStudent(idNum);
-            System.out.println(courseIdList);
-
-            // Pass the student ID and course details to the Advisor Sheet controller
-            openSelectedAdvisorsheetGUI(idNum, courseIdList);
-
-            // Clearing text field after processing the data
-            selectStudentID.setText("");
+        if (searchID.isEmpty()) {
+            // Handle the case where input is empty
+            warningSelectLabel.setText("Please enter a student ID");
+            selectStudentID.setStyle("-fx-text-box-border: red; -fx-focus-color: red;");
+            return;
         }
-        else {
-            System.out.println("Empty search student id textField");
+        try {
+            int idNum = Integer.parseInt(searchID);
+            boolean exist = doesStudentExist(idNum);
+            selectStudentID.getStyleClass().remove("red-text-field");
+
+            if (exist) {
+                warningSelectLabel.setText(null);
+
+                ObservableList<Course> courseIdList = DataCalls.selectCoursesByStudent(idNum);
+                System.out.println(courseIdList);
+
+                // Pass the student ID and course details to the Advisor Sheet controller
+                openSelectedAdvisorsheetGUI(idNum, courseIdList);
+
+                selectStudentID.setText("");
+            } else {
+                warningSelectLabel.setText("NOT A VALID STUDENT ID");
+                selectStudentID.setStyle("-fx-text-box-border: red; -fx-focus-color: red;");
+
+                System.out.println("Empty search student id textField");
+            }
+        } catch (NumberFormatException e) {
+            // Handle the case where input cannot be parsed to an integer
+            warningSelectLabel.setText("Invalid input. Please enter a valid student ID");
+            selectStudentID.setStyle("-fx-text-box-border: red; -fx-focus-color: red;");
         }
     }
 
     private void openSelectedAdvisorsheetGUI(int idNum, ObservableList<Course> studentCourseDetailsList) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/databasehelp/AdvisorSheetNew.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/databasehelp/Advisor.fxml"));
             Parent root = loader.load();
 
             AdvisorSheetController advisorSheetController = loader.getController();
@@ -160,6 +207,14 @@ public class MainController {
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
+
+
+    }
+    private static boolean validatePhoneNumber(String phoneNumber){
+        System.out.println("333-222-2222".matches("\\d{3}-\\d{3}-\\d{4}"));
+        return phoneNumber.matches("\\d{3}-\\d{3}-\\d{4}");
     }
 }

@@ -18,17 +18,28 @@
     -fx-max-height: 0;
     -fx-background-color: transparent; /* Optional: Set the background color to transparent */
 }
-#second_table .table-row-cell {
-    -fx-pref-height: 19px;
-}
-#third_table .table-row-cell {
-    -fx-pref-height: 16px;
+
+#first_table .table-row-cell {
+    -fx-pref-height: 22px;
 }
 
-#third_table table-cell {
-    -fx-font-size: 10px;
+
+#second_table .table-row-cell {
+    -fx-pref-height: 25px;
+}
+#third_table .table-row-cell {
+    -fx-pref-height: 25px;
 }
 
 #fourth_table .table-row-cell {
-    -fx-pref-height: 16px;
+    -fx-pref-height: 25px;
 }
+
+.label {
+    -fx-font-size: 17px;
+    -fx-font-weight: bold;
+}
+#numberLabel{
+    -fx-font-size: 20px;
+}
+

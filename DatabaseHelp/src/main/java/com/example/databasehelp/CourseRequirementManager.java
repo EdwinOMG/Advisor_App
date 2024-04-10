@@ -3,12 +3,22 @@ package com.example.databasehelp;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.CheckBoxTableCell;
+
+import java.sql.SQLException;
+import java.util.Objects;
+
+import static com.example.databasehelp.DataCalls.checkRequirement;
+import static com.example.databasehelp.DataCalls.updateStudentCourseDetails;
 
 public class CourseRequirementManager {
     private final ObservableList<String> completedCourseIds = FXCollections.observableArrayList();
@@ -16,12 +26,14 @@ public class CourseRequirementManager {
 
     private int studentId;
 
+    // setter for student id
     public void setStudentId(int studentId) {
         this.studentId = studentId;
         System.out.println("Received studentId in AdvisorSheetController: " + studentId);
 
     }
 
+    //setter for studentcoursedetails
     public void setStudentCourseDetails(int studentId, ObservableList<Course> studentCourseDetailsList) {
         this.studentId = studentId;
         this.studentCourseDetailsList = studentCourseDetailsList;
@@ -42,47 +54,21 @@ public class CourseRequirementManager {
     public void removeCompletedCourse(String courseId) {
         completedCourseIds.remove(courseId);
         System.out.println("COURSEREQUIREMENTMANAGER: got to remove");
-
     }
 
+    //checks if a specific course is completed by checking if the list contains id.
     public boolean isCourseRequirementCompleted(String courseId) {
         System.out.println("COURSEREQUIREMENTMANAGER: got to iscoursecompletion");
-
         return completedCourseIds.contains(courseId);
-
     }
 
-    public void initializeCheckBoxListeners(TableView<Course> tableView) {
-        TableColumn<Course, Boolean> courseCompletionColumn = getColumn(tableView, "courseCompletion");
-        System.out.println("INITIALIZECHECKBOXLISTENERS: GOT HERE");
-        if (courseCompletionColumn != null) {
-            courseCompletionColumn.setCellValueFactory(cellData -> {
-                Course course = cellData.getValue();
-                if (course.getStudentCourseDetails() != null) {
-                    return new SimpleBooleanProperty(course.getStudentCourseDetails().isCourseCompletion());
-                } else {
-                    return new SimpleBooleanProperty(false);
-                }
-            });
+    // Initializes checkboxes for first table
 
-            courseCompletionColumn.setCellFactory(column -> {
-                CheckBoxTableCell<Course, Boolean> cell = new CheckBoxTableCell<>();
-                cell.setSelectedStateCallback(param -> {
-                    Course editedCourse = tableView.getItems().get(cell.getIndex());
-                    StudentCourseDetails details = editedCourse.getStudentCourseDetails();
-                    if (details != null) {
-                        boolean newValue = (param != 0);
-                        details.setCourseCompletion(newValue);
-                    }
-                    return cell.selectedProperty();
-                });
-                return cell;
-            });
-            System.out.println("Course completion changed for all courses");
 
-        }
-    }
-    private <S, T> TableColumn<S, T> getColumn(TableView<S> tableView, String id) {
+
+
+
+            private <S, T> TableColumn<S, T> getColumn(TableView<S> tableView, String id) {
         for (TableColumn<S, ?> column : tableView.getColumns()) {
             if (id.equals(column.getId())) {
                 return (TableColumn<S, T>) column;
@@ -91,37 +77,71 @@ public class CourseRequirementManager {
         return null;
     }
 
-    public void initializeSecondCheckBoxListeners(TableView<Course> tableView, int suffix) {
-        TableColumn<Course, Boolean> courseCompletionColumn = getColumn(tableView, "course_completion_" + suffix);
-        if (courseCompletionColumn != null) {
-            courseCompletionColumn.setCellValueFactory(cellData -> {
-                Course course = cellData.getValue();
-                if (course.getStudentCourseDetails() != null) {
-                    return new SimpleBooleanProperty(course.getStudentCourseDetails().isCourseCompletion());
-                } else {
-                    return new SimpleBooleanProperty(false);
-                }
-            });
+    // Initializes checkboxes for second table
+    public void initializeCompletionStatusColumn(TableView<Course> tableView, int suffix) {
+        TableColumn<Course, String> completionStatusColumn = getColumn(tableView, "course_completion_" + suffix);
+        completionStatusColumn.setCellValueFactory(cellData -> {
+            Course course = cellData.getValue();
+            // Setting all completion column, reading the studentdetails list for completion or not
+            if (course.getStudentCourseDetails().getCourseCompletion() == 1) {
+                addCompletedCourse(course.getCourseID());
+                return new SimpleStringProperty("Completed");
+            } else {
+                return new SimpleStringProperty("Incomplete");
+            }
+        });
 
-            courseCompletionColumn.setCellFactory(column -> {
-                CheckBoxTableCell<Course, Boolean> cell = new CheckBoxTableCell<>();
+        completionStatusColumn.setCellFactory(column -> new TableCell<Course, String>() {
+            private final ChoiceBox<String> choiceBox = new ChoiceBox<>(FXCollections.observableArrayList("Completed", "Incomplete"));
 
-                cell.setSelectedStateCallback(param -> {
-                    Course editedCourse = tableView.getItems().get(cell.getIndex());
-                    StudentCourseDetails details = editedCourse.getStudentCourseDetails();
-                    if (details != null) {
-                        boolean newValue = (param != 0);
-                        details.setCourseCompletion(newValue);
+            {
+
+                choiceBox.setPrefWidth(20);
+                choiceBox.setStyle("-fx-font-size: 15px");
+                choiceBox.setOnAction(event -> {
+                    Course course = getTableView().getItems().get(getIndex());
+                    String Value = choiceBox.getValue();
+                    if (Objects.equals(Value, "Completed")) {
+                        String requiredID = checkRequirement(course.getCourseID());
+                        if (requiredID == null || completedCourseIds.contains(requiredID)){
+                            course.getStudentCourseDetails().setCourseCompletion(1);
+                            if (!isCourseRequirementCompleted(course.getCourseID())){
+                                System.out.println("Added to courselist");
+                                addCompletedCourse(course.getCourseID());
+                            }
+                            System.out.println("course set to complete");
+                            setStyle("-fx-background-color: transparent;");
+
+                        }
+                        else {
+                            choiceBox.setValue("Incomplete");
+                            setStyle("-fx-background-color: red;");
+
+                        }
+                    } else {
+                        course.getStudentCourseDetails().setCourseCompletion(0);
+                        if (isCourseRequirementCompleted(course.getCourseID())){
+                            removeCompletedCourse(course.getCourseID());
+                            System.out.println("course removed");
+                        }
+                        System.out.println("course set to incomplete");
+
                     }
-                    return cell.selectedProperty();
                 });
+            }
+            @Override
+            protected void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty) {
+                    setGraphic(null);
+                } else {
+                    choiceBox.setValue(item);
+                    setGraphic(choiceBox);
+                }
+            }
+        });
+        tableView.getColumns().add(completionStatusColumn);
 
-                return cell;
-            });
-        }
-        System.out.println("Course completion changed for all courses");
 
     }
 }
-
-
