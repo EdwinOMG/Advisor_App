@@ -25,14 +25,14 @@
 
 
 #second_table .table-row-cell {
-    -fx-pref-height: 25px;
+    -fx-pref-height: 22px;
 }
 #third_table .table-row-cell {
-    -fx-pref-height: 25px;
+    -fx-pref-height: 22px;
 }
 
 #fourth_table .table-row-cell {
-    -fx-pref-height: 25px;
+    -fx-pref-height: 22px;
 }
 
 .label {

@@ -19,68 +19,68 @@
                </image>
             </ImageView>
             <Accordion layoutX="185.0" layoutY="355.0" />
-            <TableView fx:id="first_table" editable="true" layoutX="-8.0" layoutY="223.0" prefHeight="90.0" prefWidth="725.0" >
+            <TableView fx:id="first_table" editable="true" layoutX="-8.0" layoutY="195.0" prefHeight="93.0" prefWidth="750.0" >
               <columns>
                  <TableColumn fx:id="course_completion_1" text="Completed" prefWidth="50.0"/>
-                 <TableColumn fx:id="course_id_1" text="Course ID" prefWidth="85.0"/>
+                 <TableColumn fx:id="course_id_1" text="Course ID" prefWidth="95.0"/>
                  <TableColumn fx:id="course_name_1" text="Course Name" prefWidth="290.0"/>
-                 <TableColumn fx:id="course_credits_1" text="Course Credits" prefWidth="30.0"/>
-                 <TableColumn fx:id="course_term_1" text="Course Term" prefWidth="30.0"/>
-                 <TableColumn fx:id="course_grade_1" text="Course Grade" prefWidth="28.0"/>
-                 <TableColumn fx:id="course_notes_1" text="Course Notes" prefWidth="220.0"/>
+                 <TableColumn fx:id="course_credits_1" text="Course Credits" prefWidth="35.0"/>
+                 <TableColumn fx:id="course_term_1" text="Course Term" prefWidth="28.0"/>
+                 <TableColumn fx:id="course_grade_1" text="Course Grade" prefWidth="23.0"/>
+                 <TableColumn fx:id="course_notes_1" text="Course Notes" prefWidth="212.0"/>
 
 
 
               </columns>
             </TableView>
-            <TableView fx:id="second_table" editable="true" layoutX="-8.0" layoutY="329.0" prefHeight="96.0" prefWidth="725.0">
+            <TableView fx:id="second_table" editable="true" layoutX="-8.0" layoutY="305.0" prefHeight="106.5" prefWidth="750.0">
                <columns>
                   <TableColumn fx:id="course_completion_2" text="Completed" prefWidth="50.0"/>
-                  <TableColumn fx:id="course_id_2" text="Course ID" prefWidth="85.0"/>
+                  <TableColumn fx:id="course_id_2" text="Course ID" prefWidth="95.0"/>
                   <TableColumn fx:id="course_name_2" text="Course Name" prefWidth="290.0"/>
-                  <TableColumn fx:id="course_credits_2" text="Course Credits" prefWidth="30.0"/>
-                  <TableColumn fx:id="course_term_2" text="Course Term" prefWidth="30.0"/>
-                  <TableColumn fx:id="course_grade_2" text="Course Grade" prefWidth="28.0"/>
-                  <TableColumn fx:id="course_notes_2" text="Course Notes" prefWidth="220.0"/>
+                  <TableColumn fx:id="course_credits_2" text="Course Credits" prefWidth="35.0"/>
+                  <TableColumn fx:id="course_term_2" text="Course Term" prefWidth="28.0"/>
+                  <TableColumn fx:id="course_grade_2" text="Course Grade" prefWidth="23.0"/>
+                  <TableColumn fx:id="course_notes_2" text="Course Notes" prefWidth="212.0"/>
 
                </columns>
 
             </TableView>
-            <TableView fx:id="third_table" editable="true" layoutX="-8.0" layoutY="440.0" prefHeight="81.0" prefWidth="725.0">
+            <TableView fx:id="third_table" editable="true" layoutX="-8.0" layoutY="427.0" prefHeight="109.0" prefWidth="750.0">
                <columns>
                   <TableColumn fx:id="course_completion_3" text="Completed" prefWidth="50.0"/>
-                  <TableColumn fx:id="course_id_3" text="Course ID" prefWidth="85.0"/>
+                  <TableColumn fx:id="course_id_3" text="Course ID" prefWidth="95.0"/>
                   <TableColumn fx:id="course_name_3" text="Course Name" prefWidth="290.0"/>
-                  <TableColumn fx:id="course_credits_3" text="Course Credits" prefWidth="30.0"/>
-                  <TableColumn fx:id="course_term_3" text="Course Term" prefWidth="30.0"/>
-                  <TableColumn fx:id="course_grade_3" text="Course Grade" prefWidth="28.0"/>
-                  <TableColumn fx:id="course_notes_3" text="Course Notes" prefWidth="220.0"/>
+                  <TableColumn fx:id="course_credits_3" text="Course Credits" prefWidth="35.0"/>
+                  <TableColumn fx:id="course_term_3" text="Course Term" prefWidth="28.0"/>
+                  <TableColumn fx:id="course_grade_3" text="Course Grade" prefWidth="23.0"/>
+                  <TableColumn fx:id="course_notes_3" text="Course Notes" prefWidth="212.0"/>
 
                </columns>
 
             </TableView>
-            <TableView fx:id="fourth_table" editable="true" layoutX="-8.0" layoutY="536.0" prefHeight="82.0" prefWidth="725.0">
+            <TableView fx:id="fourth_table" editable="true" layoutX="-8.0" layoutY="551.0" prefHeight="82.0" prefWidth="750.0">
                <columns>
                   <TableColumn fx:id="course_completion_4" text="Completed" prefWidth="50.0"/>
-                  <TableColumn fx:id="course_id_4" text="Course ID" prefWidth="85.0"/>
+                  <TableColumn fx:id="course_id_4" text="Course ID" prefWidth="95.0"/>
                   <TableColumn fx:id="course_name_4" text="Course Name" prefWidth="290.0"/>
-                  <TableColumn fx:id="course_credits_4" text="Course Credits" prefWidth="30.0"/>
-                  <TableColumn fx:id="course_term_4" text="Course Term" prefWidth="30.0"/>
-                  <TableColumn fx:id="course_grade_4" text="Course Grade" prefWidth="28.0"/>
-                  <TableColumn fx:id="course_notes_4" text="Course Notes" prefWidth="220.0"/>
+                  <TableColumn fx:id="course_credits_4" text="Course Credits" prefWidth="35.0"/>
+                  <TableColumn fx:id="course_term_4" text="Course Term" prefWidth="28.0"/>
+                  <TableColumn fx:id="course_grade_4" text="Course Grade" prefWidth="23.0"/>
+                  <TableColumn fx:id="course_notes_4" text="Course Notes" prefWidth="212.0"/>
 
                </columns>
 
             </TableView>
-            <TableView fx:id="pre_table" editable="true" layoutX="-8.0" layoutY="188.0" prefHeight="20.0" prefWidth="725.0">
+            <TableView fx:id="pre_table" editable="true" layoutX="-8.0" layoutY="188.0" prefHeight="20.0" prefWidth="750.0">
                <columns>
                   <TableColumn fx:id="course_completion_5" text="Completed" prefWidth="50.0"/>
-                  <TableColumn fx:id="course_id_5" text="Course ID" prefWidth="85.0"/>
+                  <TableColumn fx:id="course_id_5" text="Course ID" prefWidth="95.0"/>
                   <TableColumn fx:id="course_name_5" text="Course Name" prefWidth="290.0"/>
-                  <TableColumn fx:id="course_credits_5" text="Course Credits" prefWidth="30.0"/>
-                  <TableColumn fx:id="course_term_5" text="Course Term" prefWidth="30.0"/>
-                  <TableColumn fx:id="course_grade_5" text="Course Grade" prefWidth="28.0"/>
-                  <TableColumn fx:id="course_notes_5" text="Course Notes" prefWidth="230.0"/>
+                  <TableColumn fx:id="course_credits_5" text="Course Credits" prefWidth="35.0"/>
+                  <TableColumn fx:id="course_term_5" text="Course Term" prefWidth="28.0"/>
+                  <TableColumn fx:id="course_grade_5" text="Course Grade" prefWidth="23.0"/>
+                  <TableColumn fx:id="course_notes_5" text="Course Notes" prefWidth="212.0"/>
 
                </columns>
 
@@ -89,11 +89,11 @@
             <Button text="Save" onAction="#handleSaveButton" layoutX="400.0" layoutY="900.0" />
 
 
-            <Label fx:id="nameLabel" layoutX="170.0" layoutY="37.0" prefHeight="19.0" prefWidth="200.0" text="Name" />
-            <Label fx:id="addressLabel" layoutX="170.0" layoutY="59.0" prefHeight="19.0" prefWidth="250.0" text="Address" />
-            <Label fx:id="idLabel" layoutX="510.0" layoutY="37.0" prefHeight="19.0" prefWidth="200.0" text="Student Id" />
-            <Label fx:id="numberLabel" layoutX="518.0" layoutY="77.0" prefHeight="19.0" prefWidth="200.0" text="number" />
-            <Label fx:id="emailLabel" layoutX="166.0" layoutY="101.0" prefHeight="19.0" prefWidth="250.0" text="Email" />
+            <Label fx:id="nameLabel" layoutX="173.0" layoutY="40.0" prefHeight="19.0" prefWidth="200.0" text="Name" />
+            <Label fx:id="addressLabel" layoutX="173.0" layoutY="62.0" prefHeight="19.0" prefWidth="250.0" text="Address" />
+            <Label fx:id="idLabel" layoutX="535.0" layoutY="40.0" prefHeight="19.0" prefWidth="200.0" text="Student Id" />
+            <Label fx:id="numberLabel" layoutX="545.0" layoutY="81.0" prefHeight="19.0" prefWidth="200.0" text="number" />
+            <Label fx:id="emailLabel" layoutX="171.0" layoutY="105.0" prefHeight="19.0" prefWidth="250.0" text="Email" />
          </children>
       </Pane>
    </content>

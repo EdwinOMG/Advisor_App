@@ -253,6 +253,8 @@ public class AdvisorSheetController {
         setupTableColumns(fourth_table, semester4List, "4");
         setupTableColumns(pre_table, preReqList, "5");
 
+        //New COmputer programming sheet has no pre reqs
+        pre_table.setVisible(false);
 
         // Sets policy to constrained
     }

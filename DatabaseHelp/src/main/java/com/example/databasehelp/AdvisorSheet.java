@@ -20,7 +20,7 @@ public class AdvisorSheet extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/example/databasehelp/Advisor.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 718, 850);
+        Scene scene = new Scene(fxmlLoader.load(), 730, 850);
         // Lock stage size
         stage.setResizable(false);
 
