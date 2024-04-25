@@ -1,29 +1,20 @@
 package com.example.databasehelp;
 
-import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.geometry.Pos;
-import javafx.print.PrinterJob;
 import javafx.scene.Node;
-import javafx.scene.SnapshotParameters;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.image.WritableImage;
 import javafx.scene.layout.Pane;
-import javafx.stage.Stage;
-import javafx.util.Callback;
 
 import java.io.*;
 import java.sql.*;
@@ -31,7 +22,7 @@ import java.util.ArrayList;
 
 import static com.example.databasehelp.DataCalls.updateStudentCourseDetails;
 
-public class AdvisorSheetController {
+public class respiratorySheetController {
     @FXML
     private ImageView imageView1;
 
@@ -48,7 +39,8 @@ public class AdvisorSheetController {
     @FXML
     private transient TableView<Course> fourth_table;
 
-
+    @FXML
+    private transient TableView<Course> sixth_table;
     @FXML
     private TableColumn<Course, String> course_completion_1;
     @FXML
@@ -123,6 +115,22 @@ public class AdvisorSheetController {
     private TableColumn<Course, String> course_grade_5;
     @FXML
     private TableColumn<Course, String> course_notes_5;
+
+    @FXML
+    private TableColumn<Course, Boolean> course_completion_6;
+    @FXML
+    private TableColumn<Course, String> course_id_6;
+    @FXML
+    private TableColumn<Course, String> course_name_6;
+    @FXML
+    private TableColumn<Course, Integer> course_credits_6;
+    @FXML
+    private TableColumn<Course, String> course_term_6;
+    @FXML
+    private TableColumn<Course, String> course_grade_6;
+    @FXML
+    private TableColumn<Course, String> course_notes_6;
+
     private int studentId;
     private CourseRequirementManager courseRequirementManager;
 
@@ -167,6 +175,9 @@ public class AdvisorSheetController {
                 case 4:
                     targetTable = fourth_table;
                     break;
+                case 5:
+                    targetTable = sixth_table;
+                    break;
                 default:
                     targetTable = pre_table;
                     break;
@@ -199,7 +210,7 @@ public class AdvisorSheetController {
         CourseRequirementManager courseRequirementManager = new CourseRequirementManager();
         TermGradeColumnMaker termGradeColumnMaker = new TermGradeColumnMaker();
         //Load images
-        Image image1 = new Image(getClass().getResource("/Images/ComputerProgramming.png").toExternalForm());
+        Image image1 = new Image(getClass().getResource("/Images/respiratoryCare.png").toExternalForm());
 
         // Set images to ImageViews
         imageView1.setImage(image1);
@@ -221,6 +232,9 @@ public class AdvisorSheetController {
         ObservableList<Course> preReqCourses = DataCalls.selectCoursesBySemester(studentId, 5); //I need to add the pre reqs to database, 5 will be the semester for it
         ObservableList<Course> preReqList = FXCollections.observableArrayList(preReqCourses);
 
+        ObservableList<Course> semester5Courses = DataCalls.selectCoursesBySemester(studentId, 6);
+        ObservableList<Course> semester5List = FXCollections.observableArrayList(semester5Courses);
+
 
 // Creates choice boxes for completion column
         courseRequirementManager.initializeCompletionStatusColumn(first_table, 1);
@@ -228,6 +242,7 @@ public class AdvisorSheetController {
         courseRequirementManager.initializeCompletionStatusColumn(third_table, 3);
         courseRequirementManager.initializeCompletionStatusColumn(fourth_table, 4);
         courseRequirementManager.initializeCompletionStatusColumn(pre_table, 5);
+        courseRequirementManager.initializeCompletionStatusColumn(sixth_table, 6);
 
 
         // Uses function to create choicebox for termcolumn
@@ -237,6 +252,7 @@ public class AdvisorSheetController {
         TermGradeColumnMaker.initializeTermColumn(third_table, 3);
         TermGradeColumnMaker.initializeTermColumn(fourth_table, 4);
         TermGradeColumnMaker.initializeTermColumn(pre_table, 5);
+        TermGradeColumnMaker.initializeTermColumn(sixth_table, 6);
 
         // Uses function to create choicebox for gradecolumn
         TermGradeColumnMaker.initializeGradeColumn(first_table, 1);
@@ -244,19 +260,18 @@ public class AdvisorSheetController {
         TermGradeColumnMaker.initializeGradeColumn(third_table, 3);
         TermGradeColumnMaker.initializeGradeColumn(fourth_table, 4);
         TermGradeColumnMaker.initializeGradeColumn(pre_table, 5);
+        TermGradeColumnMaker.initializeGradeColumn(sixth_table, 6);
 
         //This uses the method to set the tables and the edit on commit function
-        setupTableColumns(first_table, coursesList, "1");
         setupTableColumns(first_table, coursesList, "1");
         setupTableColumns(second_table, semester2List, "2");
         setupTableColumns(third_table, semester3List, "3");
         setupTableColumns(fourth_table, semester4List, "4");
         setupTableColumns(pre_table, preReqList, "5");
+        setupTableColumns(sixth_table, semester5List, "6");
 
-        //New Computer programming sheet has no pre reqs
-        pre_table.setVisible(false);
 
-        // Sets policy to constrained
+
     }
 
 
@@ -270,12 +285,14 @@ public class AdvisorSheetController {
             ObservableList<Course> thirdCourses = third_table.getItems();
             ObservableList<Course> fourthCourses = fourth_table.getItems();
             ObservableList<Course> fifthCourses = pre_table.getItems();
+            ObservableList<Course> sixthCourses = sixth_table.getItems();
 
             modifyStudentCourseDetails(allCourses);
             modifyStudentCourseDetails(secondCourses);
             modifyStudentCourseDetails(thirdCourses);
             modifyStudentCourseDetails(fourthCourses);
             modifyStudentCourseDetails(fifthCourses);
+            modifyStudentCourseDetails(sixthCourses);
 
 
             System.out.println("Save operation completed for all items in the table");
@@ -380,6 +397,7 @@ public class AdvisorSheetController {
         courseRequirementManager.setStudentCourseDetails(studentId, studentCourseDetailsList);
     }
 
+    // Method to print a node (in this case, the TableView)
     public void loadStudentDetails(int studentId) throws SQLException {
         try (Connection connection = DriverManager.getConnection(URL, Username, Password)) {
 
@@ -401,5 +419,7 @@ public class AdvisorSheetController {
         }
     }
 }
+
+
 
 

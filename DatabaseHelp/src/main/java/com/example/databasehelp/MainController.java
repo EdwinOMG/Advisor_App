@@ -57,7 +57,7 @@ public class MainController {
 
     @FXML
     private void initialize() {
-        major_box.getItems().addAll("Computer Programming");
+        major_box.getItems().addAll("Computer Programming", "Respiratory Care");
     }
 
     @FXML
@@ -87,6 +87,9 @@ public class MainController {
         // can easily edit this, so when I add new majors just add numbers
         if ("Computer Programming".equals(selectedMajor)){
             majorNumber = 1;
+        }
+        else if("Respiratory Care".equals(selectedMajor)){
+            majorNumber = 2;
         }
         else {
             warningAddLabel.setText("No major selected");
@@ -131,8 +134,12 @@ public class MainController {
         studentIdInstance.setStudentId(idNum);
         System.out.println("maincontroller" + idNum);
 
-
-        openAdvisorsheetGUI(idNum);
+        if (majorNumber == 1) {
+            openAdvisorsheetGUI(idNum);
+        }
+        else if (majorNumber == 2){
+            openAdvisorsheetRespiratoryGUI(idNum);
+        }
     }
 
         private void openAdvisorsheetGUI(int idNum) {
@@ -153,6 +160,24 @@ public class MainController {
                 e.printStackTrace();
             }
         }
+    private void openAdvisorsheetRespiratoryGUI(int idNum) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/databasehelp/respiratory.fxml"));
+            Parent root = loader.load();
+
+            respiratorySheetController respiratorySheetController = loader.getController();
+
+            respiratorySheetController.setStudentId(idNum);
+
+            Stage stage = new Stage();
+            Scene scene = new Scene(root);
+
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException | SQLException e) {
+            e.printStackTrace();
+        }
+    }
     @FXML
     private void handleSearchButton(ActionEvent event) {
         System.out.println("Got into search button");
