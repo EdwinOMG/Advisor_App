@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="360.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.databasehelp.MainController">
+   <children>
+      <TextArea editable="false" layoutX="-258.0" layoutY="-214.0" minWidth="0.0" prefHeight="850.0" prefWidth="830.0" scaleX="0.3" scaleY="0.3">
+         <font>
+            <Font size="69.0" />
+         </font>
+      </TextArea>
+      <TextArea editable="false" layoutX="69.0" layoutY="-214.0" minHeight="-Infinity" minWidth="0.0" prefHeight="850.0" prefWidth="830.0" scaleX="0.3" scaleY="0.3">
+         <font>
+            <Font size="27.0" />
+         </font>
+      </TextArea>
+      <TextField fx:id="text_id" layoutX="-23.0" layoutY="133.0" minWidth="0.0" prefHeight="50.0" prefWidth="239.0" promptText="Student ID" scaleX="0.4" scaleY="0.6" />
+      <TextField fx:id="text_name" layoutX="97.0" layoutY="176.0" minWidth="0.0" prefHeight="50.0" prefWidth="239.0" promptText="Student Full Name" scaleX="0.4" scaleY="0.6" />
+      <TextField fx:id="text_email" layoutX="-23.0" layoutY="176.0" minWidth="0.0" prefHeight="50.0" prefWidth="239.0" promptText="Student Email" scaleX="0.4" scaleY="0.6" />
+      <TextField fx:id="text_address" layoutX="97.0" layoutY="133.0" minWidth="0.0" prefHeight="50.0" prefWidth="239.0" promptText="Student Address" scaleX="0.4" scaleY="0.6" />
+      <TextField fx:id="text_number" layoutX="41.0" layoutY="216.0" minWidth="0.0" prefHeight="50.0" prefWidth="239.0" promptText="Student Phone #" scaleX="0.4" scaleY="0.6" />
+      <ChoiceBox fx:id="major_box" layoutX="-18.0" layoutY="84.0" minWidth="0.0" prefHeight="78.0" prefWidth="441.0" scaleX="0.3" scaleY="0.3" />
+      <Button fx:id="addButton" defaultButton="true" graphicTextGap="6.0" layoutX="29.0" layoutY="230.0" maxHeight="200.0" maxWidth="261.0" minWidth="200.0" mnemonicParsing="false" onAction="#handleAddButton" prefHeight="138.0" prefWidth="261.0" scaleX="0.3" scaleY="0.3" text="Add" textFill="#56ae6d">
+         <font>
+            <Font size="57.0" />
+         </font></Button>
+      <Label layoutX="36.0" layoutY="-33.0" minHeight="150.0" minWidth="602.0" prefHeight="150.0" prefWidth="602.0" scaleX="0.6" scaleY="0.6" text="Hello Advisor!" textFill="#070707">
+         <font>
+            <Font size="96.0" />
+         </font>
+      </Label>
+      <Label layoutX="-19.0" layoutY="91.0" minHeight="50.0" prefHeight="61.0" prefWidth="211.0" scaleX="0.4" scaleY="0.4" text="Pick Major:">
+         <font>
+            <Font size="44.0" />
+         </font>
+      </Label>
+      <Label fx:id="SelectCurrentTextbox" layoutX="227.0" layoutY="118.0" prefHeight="75.0" prefWidth="392.0" scaleX="0.3" scaleY="0.3" text="Enter Student ID: ">
+          <font>
+             <Font size="54.0" />
+          </font>
+      </Label>
+      <TextField fx:id="selectStudentID" layoutX="353.0" layoutY="118.0" prefHeight="75.0" prefWidth="379.0" promptText="Student ID" scaleX="0.3" scaleY="0.3">
+        <font>
+            <Font size="29.0" />
+        </font>
+      </TextField>
+     <Button fx:id="searchButton" defaultButton="true" layoutX="336.0" layoutY="194.0" maxHeight="200.0" maxWidth="339.0" minWidth="200.0" mnemonicParsing="false" onAction="#handleSearchButton" prefHeight="163.0" prefWidth="294.0" scaleX="0.3" scaleY="0.3" text="Search">
+        <font>
+            <Font size="55.0" />
+        </font></Button>
+      <Label layoutX="132.0" layoutY="50.0" prefHeight="92.0" prefWidth="705.0" scaleX="0.3" scaleY="0.3" text="Select Current Student:">
+         <font>
+            <Font size="71.0" />
+         </font>
+      </Label>
+      <Label fx:id="warningSelectLabel" layoutX="410.0" layoutY="200.0" prefHeight="20.0" prefWidth="341.0" />
+      <Label layoutX="-48.0" layoutY="45.0" prefHeight="100.0" prefWidth="418.0" scaleX="0.3" scaleY="0.3" text="Add a Student">
+         <font>
+            <Font size="69.0" />
+         </font>
+      </Label>
+      <Label fx:id="warningAddLabel" layoutX="100.0" layoutY="260.0" prefHeight="10.0" prefWidth="378.0" />
+   </children>
+</Pane>

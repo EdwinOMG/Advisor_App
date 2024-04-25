@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.TableRow?>
+
+
+<ScrollPane fx:id="scrollPane" stylesheets="@styles.css" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="850.0" prefWidth="718.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller = "com.example.databasehelp.AdvisorSheetController" hbarPolicy="NEVER" vbarPolicy="NEVER">
+   <content>
+      <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1479.0" prefWidth="726.0">
+         <children>
+            <ImageView fx:id="imageView1" fitHeight="848.0" fitWidth="905.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../IdeaProjects/DatabaseHelp/src/main/resources/Images/ComputerProgramming.png" />
+               </image>
+            </ImageView>
+            <Accordion layoutX="185.0" layoutY="355.0" />
+            <TableView fx:id="first_table" editable="true" layoutX="-8.0" layoutY="195.0" prefHeight="93.0" prefWidth="750.0" >
+              <columns>
+                 <TableColumn fx:id="course_completion_1" text="Completed" prefWidth="50.0"/>
+                 <TableColumn fx:id="course_id_1" text="Course ID" prefWidth="95.0"/>
+                 <TableColumn fx:id="course_name_1" text="Course Name" prefWidth="290.0"/>
+                 <TableColumn fx:id="course_credits_1" text="Course Credits" prefWidth="35.0"/>
+                 <TableColumn fx:id="course_term_1" text="Course Term" prefWidth="28.0"/>
+                 <TableColumn fx:id="course_grade_1" text="Course Grade" prefWidth="23.0"/>
+                 <TableColumn fx:id="course_notes_1" text="Course Notes" prefWidth="212.0"/>
+
+
+
+              </columns>
+            </TableView>
+            <TableView fx:id="second_table" editable="true" layoutX="-8.0" layoutY="305.0" prefHeight="106.5" prefWidth="750.0">
+               <columns>
+                  <TableColumn fx:id="course_completion_2" text="Completed" prefWidth="50.0"/>
+                  <TableColumn fx:id="course_id_2" text="Course ID" prefWidth="95.0"/>
+                  <TableColumn fx:id="course_name_2" text="Course Name" prefWidth="290.0"/>
+                  <TableColumn fx:id="course_credits_2" text="Course Credits" prefWidth="35.0"/>
+                  <TableColumn fx:id="course_term_2" text="Course Term" prefWidth="28.0"/>
+                  <TableColumn fx:id="course_grade_2" text="Course Grade" prefWidth="23.0"/>
+                  <TableColumn fx:id="course_notes_2" text="Course Notes" prefWidth="212.0"/>
+
+               </columns>
+
+            </TableView>
+            <TableView fx:id="third_table" editable="true" layoutX="-8.0" layoutY="427.0" prefHeight="109.0" prefWidth="750.0">
+               <columns>
+                  <TableColumn fx:id="course_completion_3" text="Completed" prefWidth="50.0"/>
+                  <TableColumn fx:id="course_id_3" text="Course ID" prefWidth="95.0"/>
+                  <TableColumn fx:id="course_name_3" text="Course Name" prefWidth="290.0"/>
+                  <TableColumn fx:id="course_credits_3" text="Course Credits" prefWidth="35.0"/>
+                  <TableColumn fx:id="course_term_3" text="Course Term" prefWidth="28.0"/>
+                  <TableColumn fx:id="course_grade_3" text="Course Grade" prefWidth="23.0"/>
+                  <TableColumn fx:id="course_notes_3" text="Course Notes" prefWidth="212.0"/>
+
+               </columns>
+
+            </TableView>
+            <TableView fx:id="fourth_table" editable="true" layoutX="-8.0" layoutY="551.0" prefHeight="82.0" prefWidth="750.0">
+               <columns>
+                  <TableColumn fx:id="course_completion_4" text="Completed" prefWidth="50.0"/>
+                  <TableColumn fx:id="course_id_4" text="Course ID" prefWidth="95.0"/>
+                  <TableColumn fx:id="course_name_4" text="Course Name" prefWidth="290.0"/>
+                  <TableColumn fx:id="course_credits_4" text="Course Credits" prefWidth="35.0"/>
+                  <TableColumn fx:id="course_term_4" text="Course Term" prefWidth="28.0"/>
+                  <TableColumn fx:id="course_grade_4" text="Course Grade" prefWidth="23.0"/>
+                  <TableColumn fx:id="course_notes_4" text="Course Notes" prefWidth="212.0"/>
+
+               </columns>
+
+            </TableView>
+            <TableView fx:id="pre_table" editable="true" layoutX="-8.0" layoutY="188.0" prefHeight="20.0" prefWidth="750.0">
+               <columns>
+                  <TableColumn fx:id="course_completion_5" text="Completed" prefWidth="50.0"/>
+                  <TableColumn fx:id="course_id_5" text="Course ID" prefWidth="95.0"/>
+                  <TableColumn fx:id="course_name_5" text="Course Name" prefWidth="290.0"/>
+                  <TableColumn fx:id="course_credits_5" text="Course Credits" prefWidth="35.0"/>
+                  <TableColumn fx:id="course_term_5" text="Course Term" prefWidth="28.0"/>
+                  <TableColumn fx:id="course_grade_5" text="Course Grade" prefWidth="23.0"/>
+                  <TableColumn fx:id="course_notes_5" text="Course Notes" prefWidth="212.0"/>
+
+               </columns>
+
+            </TableView>
+
+            <Button text="Save" onAction="#handleSaveButton" layoutX="400.0" layoutY="900.0" />
+
+
+            <Label fx:id="nameLabel" layoutX="173.0" layoutY="40.0" prefHeight="19.0" prefWidth="200.0" text="Name" />
+            <Label fx:id="addressLabel" layoutX="173.0" layoutY="62.0" prefHeight="19.0" prefWidth="250.0" text="Address" />
+            <Label fx:id="idLabel" layoutX="535.0" layoutY="40.0" prefHeight="19.0" prefWidth="200.0" text="Student Id" />
+            <Label fx:id="numberLabel" layoutX="545.0" layoutY="81.0" prefHeight="19.0" prefWidth="200.0" text="number" />
+            <Label fx:id="emailLabel" layoutX="171.0" layoutY="105.0" prefHeight="19.0" prefWidth="250.0" text="Email" />
+         </children>
+      </Pane>
+   </content>
+</ScrollPane>
