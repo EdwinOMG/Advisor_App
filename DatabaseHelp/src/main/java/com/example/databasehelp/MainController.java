@@ -199,8 +199,18 @@ public class MainController {
                 ObservableList<Course> courseIdList = DataCalls.selectCoursesByStudent(idNum);
                 System.out.println(courseIdList);
 
-                // Pass the student ID and course details to the Advisor Sheet controller
-                openSelectedAdvisorsheetGUI(idNum, courseIdList);
+                // Pass the student ID and course details to the appropriate controller
+                int major = DataCalls.getMajorFromStudent(idNum);
+                if (major == 1){
+                    openSelectedAdvisorsheetGUI(idNum, courseIdList);
+
+                }
+                else if (major == 2){
+                    openSelectedRespiratoryGUI(idNum, courseIdList);
+                }
+                else {
+                    System.out.println("Chat theres only two majors how could they do this...");
+                }
 
                 selectStudentID.setText("");
             } else {
@@ -238,6 +248,32 @@ public class MainController {
 
 
     }
+
+
+    private void openSelectedRespiratoryGUI(int idNum, ObservableList<Course> studentCourseDetailsList) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/databasehelp/respiratory.fxml"));
+            Parent root = loader.load();
+
+            respiratorySheetController respiratorySheetController = loader.getController();
+
+            respiratorySheetController.setStudentCourseDetails(studentCourseDetailsList);
+            respiratorySheetController.setStudentId(idNum);
+            Stage stage = new Stage();
+            Scene scene = new Scene(root);
+
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+
+    }
+
+
     private static boolean validatePhoneNumber(String phoneNumber){
         System.out.println("333-222-2222".matches("\\d{3}-\\d{3}-\\d{4}"));
         return phoneNumber.matches("\\d{3}-\\d{3}-\\d{4}");

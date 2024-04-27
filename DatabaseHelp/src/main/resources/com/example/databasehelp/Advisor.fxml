@@ -11,7 +11,7 @@
 
 <ScrollPane fx:id="scrollPane" stylesheets="@styles.css" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="850.0" prefWidth="718.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller = "com.example.databasehelp.AdvisorSheetController" hbarPolicy="NEVER" vbarPolicy="NEVER">
    <content>
-      <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1479.0" prefWidth="726.0">
+      <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="950.0" prefWidth="726.0">
          <children>
             <ImageView fx:id="imageView1" fitHeight="848.0" fitWidth="905.0" pickOnBounds="true" preserveRatio="true">
                <image>

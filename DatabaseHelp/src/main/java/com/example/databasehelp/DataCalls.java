@@ -36,11 +36,11 @@ public class DataCalls {
         return false;
     }
     // Grabs course data by semester
-    public static ObservableList<Course> selectCoursesBySemester(int studentId, int courseSemester) {
+    public static ObservableList<Course> selectCoursesBySemester(int studentId, int courseSemester, int majorID) {
         String sql = "SELECT c.course_id, c.course_name, c.course_credits, s.course_grade, s.course_term, s.course_notes, s.course_completion\n" +
                 "FROM course c\n" +
                 " LEFT JOIN StudentCourseDetails s ON c.course_id = s.course_id AND s.Student_ID = ?\n" +
-                "WHERE c.course_semester = ? AND (s.course_id IS NOT NULL OR s.course_id IS NULL);";
+                "WHERE c.course_semester = ? AND Major_ID = ? AND (s.course_id IS NOT NULL OR s.course_id IS NULL);";
 
         ObservableList<Course> courses = FXCollections.observableArrayList();
 
@@ -49,6 +49,7 @@ public class DataCalls {
 
             preparedStatement.setInt(1, studentId);
             preparedStatement.setInt(2, courseSemester);
+            preparedStatement.setInt(3, majorID);
 
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 while (resultSet.next()) {
@@ -303,6 +304,32 @@ public class DataCalls {
             e.printStackTrace();
         }
        return "";
+    }
+
+// Checks what major the student is to load up the sheet
+    public static int getMajorFromStudent(int studentId) {
+        String query = "SELECT Major_ID " +
+                "FROM Student " +
+                "WHERE Student_ID = ?";
+
+        try (Connection connection = getConnection(URL, Username, Password);
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+
+            preparedStatement.setInt(1, studentId);
+
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    int major_ID = resultSet.getInt("Major_ID");
+
+
+                    return major_ID;
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return 0; // If there is no major_id
     }
 
     }

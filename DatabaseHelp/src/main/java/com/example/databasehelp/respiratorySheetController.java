@@ -132,7 +132,6 @@ public class respiratorySheetController {
     private TableColumn<Course, String> course_notes_6;
 
     private int studentId;
-    private CourseRequirementManager courseRequirementManager;
 
     @FXML
     private Label idLabel;
@@ -148,6 +147,9 @@ public class respiratorySheetController {
     static String Username = "root";
     static String Password = "password";
 
+    CourseRequirementManager courseRequirementManager = new CourseRequirementManager();
+
+
     public void setStudentId(int studentId) throws SQLException {
         // allows studentid to get set from maincontroller
         this.studentId = studentId;
@@ -155,6 +157,7 @@ public class respiratorySheetController {
         loadStudentDetails(studentId);
 
     }
+
 
     public void setStudentCourseDetails(ObservableList<Course> studentCourseDetailsList) {
         //Loads studentcoursedetails based on semester and course
@@ -176,10 +179,13 @@ public class respiratorySheetController {
                     targetTable = fourth_table;
                     break;
                 case 5:
+                    targetTable = pre_table;
+                    break;
+                case 6:
                     targetTable = sixth_table;
                     break;
                 default:
-                    targetTable = pre_table;
+                    targetTable = null;
                     break;
             }
 
@@ -204,10 +210,17 @@ public class respiratorySheetController {
         items.add(newCourse);
     }
 
+    // setter for courserequirementmanager
+    public void setStudentDetails(int studentId, ObservableList<Course> studentCourseDetailsList) {
+        // Set student ID
+        courseRequirementManager.setStudentId(studentId);
+        // Set student course details
+        courseRequirementManager.setStudentCourseDetails(studentId, studentCourseDetailsList);
+    }
+
     @FXML
     private void initialize() throws SQLException {
 
-        CourseRequirementManager courseRequirementManager = new CourseRequirementManager();
         TermGradeColumnMaker termGradeColumnMaker = new TermGradeColumnMaker();
         //Load images
         Image image1 = new Image(getClass().getResource("/Images/respiratoryCare.png").toExternalForm());
@@ -215,25 +228,35 @@ public class respiratorySheetController {
         // Set images to ImageViews
         imageView1.setImage(image1);
 
-
         //grabbing all the classes in semesters, adding them to observable list for the tables
-        ObservableList<Course> semester1Courses = DataCalls.selectCoursesBySemester(studentId, 1);
+        ObservableList<Course> semester1Courses = DataCalls.selectCoursesBySemester(studentId, 1, 2);
         ObservableList<Course> coursesList = FXCollections.observableArrayList(semester1Courses);
 
-        ObservableList<Course> semester2Courses = DataCalls.selectCoursesBySemester(studentId, 2);
+        ObservableList<Course> semester2Courses = DataCalls.selectCoursesBySemester(studentId, 2, 2);
         ObservableList<Course> semester2List = FXCollections.observableArrayList(semester2Courses);
 
-        ObservableList<Course> semester3Courses = DataCalls.selectCoursesBySemester(studentId, 3);
+        ObservableList<Course> semester3Courses = DataCalls.selectCoursesBySemester(studentId, 3, 2);
         ObservableList<Course> semester3List = FXCollections.observableArrayList(semester3Courses);
 
-        ObservableList<Course> semester4Courses = DataCalls.selectCoursesBySemester(studentId, 4);
+        ObservableList<Course> semester4Courses = DataCalls.selectCoursesBySemester(studentId, 4, 2);
         ObservableList<Course> semester4List = FXCollections.observableArrayList(semester4Courses);
 
-        ObservableList<Course> preReqCourses = DataCalls.selectCoursesBySemester(studentId, 5); //I need to add the pre reqs to database, 5 will be the semester for it
+        ObservableList<Course> preReqCourses = DataCalls.selectCoursesBySemester(studentId, 5, 2);
         ObservableList<Course> preReqList = FXCollections.observableArrayList(preReqCourses);
 
-        ObservableList<Course> semester5Courses = DataCalls.selectCoursesBySemester(studentId, 6);
+        ObservableList<Course> semester5Courses = DataCalls.selectCoursesBySemester(studentId, 6, 2);
         ObservableList<Course> semester5List = FXCollections.observableArrayList(semester5Courses);
+
+
+
+        ObservableList<Course> studentCourseDetailsList = FXCollections.observableArrayList();
+
+        for (int semester = 1; semester <= 6; semester++) {
+            ObservableList<Course> semesterCourses = DataCalls.selectCoursesBySemester(studentId, semester, 2);
+            studentCourseDetailsList.addAll(semesterCourses);
+        }
+
+        setStudentDetails(studentId, studentCourseDetailsList);
 
 
 // Creates choice boxes for completion column
@@ -364,18 +387,14 @@ public class respiratorySheetController {
     //Goes through each course, if null in all it won't insert, if anything is not null it will insert it into the database.
     public void modifyStudentCourseDetails(ObservableList<Course> courseList) throws SQLException {
         for (Course originalCourse : courseList) {
-            System.out.println(originalCourse);
-
             StudentCourseDetails details = originalCourse.getStudentCourseDetails();
             if (details == null) {
                 System.out.println("Skipping null details for course: " + originalCourse.getCourseID());
                 continue;
             }
-            System.out.println("Processing course: " + originalCourse.getCourseID());
 
             String courseId = originalCourse.getCourseID();
-            System.out.println(details.getCourseCompletion());
-            boolean recordExists = DataCalls.doesStudentCourseDetailsExist(studentId, courseId);
+            boolean recordExists = DataCalls.doesStudentCourseDetailsExist(studentId, courseId); // Check existence based on both courseId and studentId
 
             if (!recordExists) {
                 DataCalls.insertStudentCourseDetails(studentId, courseId, details);
@@ -385,17 +404,8 @@ public class respiratorySheetController {
                 System.out.println("Updating existing record");
             }
         }
-
-
     }
 
-    // setter for courserequirementmanager
-    public void setStudentDetails(int studentId, ObservableList<Course> studentCourseDetailsList) {
-        // Set student ID
-        courseRequirementManager.setStudentId(studentId);
-        // Set student course details
-        courseRequirementManager.setStudentCourseDetails(studentId, studentCourseDetailsList);
-    }
 
     // Method to print a node (in this case, the TableView)
     public void loadStudentDetails(int studentId) throws SQLException {

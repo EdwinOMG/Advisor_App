@@ -193,6 +193,14 @@ public class AdvisorSheetController {
         items.add(newCourse);
     }
 
+    // setter for courserequirementmanager
+    public void setStudentDetails(int studentId, ObservableList<Course> studentCourseDetailsList) {
+        // Set student ID
+        courseRequirementManager.setStudentId(studentId);
+        // Set student course details
+        courseRequirementManager.setStudentCourseDetails(studentId, studentCourseDetailsList);
+    }
+
     @FXML
     private void initialize() throws SQLException {
 
@@ -206,19 +214,19 @@ public class AdvisorSheetController {
 
 
         //grabbing all the classes in semesters, adding them to observable list for the tables
-        ObservableList<Course> semester1Courses = DataCalls.selectCoursesBySemester(studentId, 1);
+        ObservableList<Course> semester1Courses = DataCalls.selectCoursesBySemester(studentId, 1, 1);
         ObservableList<Course> coursesList = FXCollections.observableArrayList(semester1Courses);
 
-        ObservableList<Course> semester2Courses = DataCalls.selectCoursesBySemester(studentId, 2);
+        ObservableList<Course> semester2Courses = DataCalls.selectCoursesBySemester(studentId, 2, 1);
         ObservableList<Course> semester2List = FXCollections.observableArrayList(semester2Courses);
 
-        ObservableList<Course> semester3Courses = DataCalls.selectCoursesBySemester(studentId, 3);
+        ObservableList<Course> semester3Courses = DataCalls.selectCoursesBySemester(studentId, 3, 1);
         ObservableList<Course> semester3List = FXCollections.observableArrayList(semester3Courses);
 
-        ObservableList<Course> semester4Courses = DataCalls.selectCoursesBySemester(studentId, 4);
+        ObservableList<Course> semester4Courses = DataCalls.selectCoursesBySemester(studentId, 4, 1);
         ObservableList<Course> semester4List = FXCollections.observableArrayList(semester4Courses);
 
-        ObservableList<Course> preReqCourses = DataCalls.selectCoursesBySemester(studentId, 5); //I need to add the pre reqs to database, 5 will be the semester for it
+        ObservableList<Course> preReqCourses = DataCalls.selectCoursesBySemester(studentId, 5, 1); //I need to add the pre reqs to database, 5 will be the semester for it
         ObservableList<Course> preReqList = FXCollections.observableArrayList(preReqCourses);
 
 
@@ -372,13 +380,7 @@ public class AdvisorSheetController {
 
     }
 
-    // setter for courserequirementmanager
-    public void setStudentDetails(int studentId, ObservableList<Course> studentCourseDetailsList) {
-        // Set student ID
-        courseRequirementManager.setStudentId(studentId);
-        // Set student course details
-        courseRequirementManager.setStudentCourseDetails(studentId, studentCourseDetailsList);
-    }
+
 
     public void loadStudentDetails(int studentId) throws SQLException {
         try (Connection connection = DriverManager.getConnection(URL, Username, Password)) {
