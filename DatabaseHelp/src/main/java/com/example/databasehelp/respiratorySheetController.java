@@ -196,18 +196,27 @@ public class respiratorySheetController {
     }
 
     private void replaceCourseInTable(TableView<Course> table, Course newCourse) {
-        //If a course has valid student course details, it replaces the old row
         ObservableList<Course> items = table.getItems();
+        int index = -1;
 
-        for (Course oldCourse : new ArrayList<>(items)) {
+        // Find the index of the old course
+        for (int i = 0; i < items.size(); i++) {
+            Course oldCourse = items.get(i);
             if (oldCourse.getCourseID().equals(newCourse.getCourseID())) {
-                items.remove(oldCourse);
+                index = i;
                 break;
             }
         }
 
-        // Add the new course to the table
-        items.add(newCourse);
+        if (index != -1) {
+            // Remove the old course from the list
+            items.remove(index);
+            // Insert the new course at the same index
+            items.add(index, newCourse);
+        } else {
+            // If the old course wasn't found, add the new course to the end of the list
+            items.add(newCourse);
+        }
     }
 
     // setter for courserequirementmanager
@@ -227,6 +236,7 @@ public class respiratorySheetController {
 
         // Set images to ImageViews
         imageView1.setImage(image1);
+        loadStudentDetails(studentId);
 
         //grabbing all the classes in semesters, adding them to observable list for the tables
         ObservableList<Course> semester1Courses = DataCalls.selectCoursesBySemester(studentId, 1, 2);
@@ -247,54 +257,107 @@ public class respiratorySheetController {
         ObservableList<Course> semester5Courses = DataCalls.selectCoursesBySemester(studentId, 6, 2);
         ObservableList<Course> semester5List = FXCollections.observableArrayList(semester5Courses);
 
-
-
-        ObservableList<Course> studentCourseDetailsList = FXCollections.observableArrayList();
-
+// Set up tables and columns for each semester
         for (int semester = 1; semester <= 6; semester++) {
-            ObservableList<Course> semesterCourses = DataCalls.selectCoursesBySemester(studentId, semester, 2);
-            studentCourseDetailsList.addAll(semesterCourses);
+            TableView<Course> table = null;
+            ObservableList<Course> semesterCourses = null;
+
+            switch (semester) {
+                case 1:
+                    table = first_table;
+                    semesterCourses = semester1Courses;
+                    break;
+                case 2:
+                    table = second_table;
+                    semesterCourses = semester2Courses;
+                    break;
+                case 3:
+                    table = third_table;
+                    semesterCourses = semester3Courses;
+                    break;
+                case 4:
+                    table = fourth_table;
+                    semesterCourses = semester4Courses;
+                    break;
+                case 5:
+                    table = pre_table;
+                    semesterCourses = preReqCourses;
+                    break;
+                case 6:
+                    table = sixth_table;
+                    semesterCourses = semester5Courses;
+                    break;
+                default:
+                    break;
+            }
+
+            if (table != null && semesterCourses != null) {
+                setupTableColumns(table, semesterCourses, String.valueOf(semester));
+            }
         }
 
-        setStudentDetails(studentId, studentCourseDetailsList);
+        // Initialize completion status columns
+        for (int semester = 1; semester <= 6; semester++) {
+            TableView<Course> table = null;
+            switch (semester) {
+                case 1:
+                    table = first_table;
+                    break;
+                case 2:
+                    table = second_table;
+                    break;
+                case 3:
+                    table = third_table;
+                    break;
+                case 4:
+                    table = fourth_table;
+                    break;
+                case 5:
+                    table = pre_table;
+                    break;
+                case 6:
+                    table = sixth_table;
+                    break;
+                default:
+                    break;
+            }
 
+            if (table != null) {
+                courseRequirementManager.initializeCompletionStatusColumn(table, semester);
+            }
+        }
 
-// Creates choice boxes for completion column
-        courseRequirementManager.initializeCompletionStatusColumn(first_table, 1);
-        courseRequirementManager.initializeCompletionStatusColumn(second_table, 2);
-        courseRequirementManager.initializeCompletionStatusColumn(third_table, 3);
-        courseRequirementManager.initializeCompletionStatusColumn(fourth_table, 4);
-        courseRequirementManager.initializeCompletionStatusColumn(pre_table, 5);
-        courseRequirementManager.initializeCompletionStatusColumn(sixth_table, 6);
+        // Initialize term and grade columns
+        for (int semester = 1; semester <= 6; semester++) {
+            TableView<Course> table = null;
+            switch (semester) {
+                case 1:
+                    table = first_table;
+                    break;
+                case 2:
+                    table = second_table;
+                    break;
+                case 3:
+                    table = third_table;
+                    break;
+                case 4:
+                    table = fourth_table;
+                    break;
+                case 5:
+                    table = pre_table;
+                    break;
+                case 6:
+                    table = sixth_table;
+                    break;
+                default:
+                    break;
+            }
 
-
-        // Uses function to create choicebox for termcolumn
-
-        TermGradeColumnMaker.initializeTermColumn(first_table, 1);
-        TermGradeColumnMaker.initializeTermColumn(second_table, 2);
-        TermGradeColumnMaker.initializeTermColumn(third_table, 3);
-        TermGradeColumnMaker.initializeTermColumn(fourth_table, 4);
-        TermGradeColumnMaker.initializeTermColumn(pre_table, 5);
-        TermGradeColumnMaker.initializeTermColumn(sixth_table, 6);
-
-        // Uses function to create choicebox for gradecolumn
-        TermGradeColumnMaker.initializeGradeColumn(first_table, 1);
-        TermGradeColumnMaker.initializeGradeColumn(second_table, 2);
-        TermGradeColumnMaker.initializeGradeColumn(third_table, 3);
-        TermGradeColumnMaker.initializeGradeColumn(fourth_table, 4);
-        TermGradeColumnMaker.initializeGradeColumn(pre_table, 5);
-        TermGradeColumnMaker.initializeGradeColumn(sixth_table, 6);
-
-        //This uses the method to set the tables and the edit on commit function
-        setupTableColumns(first_table, coursesList, "1");
-        setupTableColumns(second_table, semester2List, "2");
-        setupTableColumns(third_table, semester3List, "3");
-        setupTableColumns(fourth_table, semester4List, "4");
-        setupTableColumns(pre_table, preReqList, "5");
-        setupTableColumns(sixth_table, semester5List, "6");
-
-
-
+            if (table != null) {
+                TermGradeColumnMaker.initializeTermColumn(table, semester);
+                TermGradeColumnMaker.initializeGradeColumn(table, semester);
+            }
+        }
     }
 
 
@@ -429,6 +492,7 @@ public class respiratorySheetController {
         }
     }
 }
+
 
 
 

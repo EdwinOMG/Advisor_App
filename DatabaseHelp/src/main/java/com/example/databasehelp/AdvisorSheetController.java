@@ -179,18 +179,25 @@ public class AdvisorSheetController {
     }
 
     private void replaceCourseInTable(TableView<Course> table, Course newCourse) {
-        //If a course has valid student course details, it replaces the old row
         ObservableList<Course> items = table.getItems();
+        int index = -1;
 
-        for (Course oldCourse : new ArrayList<>(items)) {
+        // Find the index of the old course
+        for (int i = 0; i < items.size(); i++) {
+            Course oldCourse = items.get(i);
             if (oldCourse.getCourseID().equals(newCourse.getCourseID())) {
-                items.remove(oldCourse);
+                index = i;
                 break;
             }
         }
 
-        // Add the new course to the table
-        items.add(newCourse);
+        if (index != -1) {
+            // Replace the old course with the new course at the same index
+            items.set(index, newCourse);
+        } else {
+            // If the old course wasn't found, add the new course to the end of the list
+            items.add(newCourse);
+        }
     }
 
     // setter for courserequirementmanager

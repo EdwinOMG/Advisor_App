@@ -83,7 +83,7 @@ public class CourseRequirementManager {
         completionStatusColumn.setCellValueFactory(cellData -> {
             Course course = cellData.getValue();
             // Setting all completion column, reading the studentdetails list for completion or not
-            if (course.getStudentCourseDetails().getCourseCompletion() == 1) {
+            if (course != null && course.getStudentCourseDetails() != null && course.getStudentCourseDetails().getCourseCompletion() == 1) {
                 addCompletedCourse(course.getCourseID());
                 return new SimpleStringProperty("Completed");
             } else {
@@ -95,53 +95,53 @@ public class CourseRequirementManager {
             private final ChoiceBox<String> choiceBox = new ChoiceBox<>(FXCollections.observableArrayList("Completed", "Incomplete"));
 
             {
-
                 choiceBox.setPrefWidth(20);
                 choiceBox.setStyle("-fx-font-size: 15px");
-                choiceBox.setOnAction(event -> {
-                    Course course = getTableView().getItems().get(getIndex());
-                    String Value = choiceBox.getValue();
-                    if (Objects.equals(Value, "Completed")) {
-                        String requiredID = checkRequirement(course.getCourseID());
-                        if (requiredID == null || completedCourseIds.contains(requiredID)){
-                            course.getStudentCourseDetails().setCourseCompletion(1);
-                            if (!isCourseRequirementCompleted(course.getCourseID())){
-                                System.out.println("Added to courselist");
-                                addCompletedCourse(course.getCourseID());
-                            }
-                            System.out.println("course set to complete");
-                            setStyle("-fx-background-color: transparent;");
 
-                        }
-                        else {
-                            choiceBox.setValue("Incomplete");
-                            setStyle("-fx-background-color: red;");
-
-                        }
-                    } else {
-                        course.getStudentCourseDetails().setCourseCompletion(0);
-                        if (isCourseRequirementCompleted(course.getCourseID())){
-                            removeCompletedCourse(course.getCourseID());
-                            System.out.println("course removed");
-                        }
-                        System.out.println("course set to incomplete");
-
-                    }
-                });
             }
             @Override
             protected void updateItem(String item, boolean empty) {
                 super.updateItem(item, empty);
-                if (empty) {
+                if (empty || item == null) {
                     setGraphic(null);
                 } else {
-                    choiceBox.setValue(item);
                     setGraphic(choiceBox);
+                    Course course = getTableView().getItems().get(getIndex());
+                    if (course != null && course.getStudentCourseDetails() != null) {
+                        // Initialize the ChoiceBox with the correct completion status
+                        choiceBox.setValue(course.getStudentCourseDetails().getCourseCompletion() == 1 ? "Completed" : "Incomplete");
+
+                        // Handle actions when the user changes the completion status
+                        choiceBox.setOnAction(event -> {
+                            String value = choiceBox.getValue();
+                            if (Objects.equals(value, "Completed")) {
+                                // Handle completion
+                                String requiredID = checkRequirement(course.getCourseID());
+                                if (requiredID == null || completedCourseIds.contains(requiredID)) {
+                                    course.getStudentCourseDetails().setCourseCompletion(1);
+                                    if (!isCourseRequirementCompleted(course.getCourseID())) {
+                                        System.out.println("Added to courselist");
+                                        addCompletedCourse(course.getCourseID());
+                                    }
+                                    System.out.println("course set to complete");
+                                    setStyle("-fx-background-color: transparent;");
+                                } else {
+                                    choiceBox.setValue("Incomplete");
+                                    setStyle("-fx-background-color: red;");
+                                }
+                            } else {
+                                // Handle incompletion
+                                course.getStudentCourseDetails().setCourseCompletion(0);
+                                if (isCourseRequirementCompleted(course.getCourseID())) {
+                                    removeCompletedCourse(course.getCourseID());
+                                    System.out.println("course removed");
+                                }
+                                System.out.println("course set to incomplete");
+                            }
+                        });
+                    }
                 }
             }
-        });
-        tableView.getColumns().add(completionStatusColumn);
-
-
+});
     }
-}
+    }
